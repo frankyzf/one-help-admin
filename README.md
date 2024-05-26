@@ -13,20 +13,9 @@ Unlike past systems, One Help leverages advanced AI technology to deeply underst
 
 ## How to run
 
-1. **install pnpm**
-- On Windows
-Using PowerShell:
-iwr https://get.pnpm.io/install.ps1 -useb | iex
+1. **yarn install**
 
-- On POSIX systems
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-
-- If you don't have curl installed, you would like to use wget:
-wget -qO- https://get.pnpm.io/install.sh | sh -
-
-2. **pnpm install**
-
-3. **pnpm run dev**
+2. **yarn run dev:local**
 
 
 ## Contact
