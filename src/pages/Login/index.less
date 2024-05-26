@@ -1,0 +1,48 @@
+@import '~antd/es/style/themes/default.less';
+
+.loginContainer {
+  position: relative;
+  height: 100%;
+
+  .loginForm {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    text-align: center;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+
+    .logo {
+      width: 300px;
+      margin-bottom: 24px;
+    }
+
+    .welcome {
+      color: #8590a4;
+      font-size: 20px;
+    }
+
+    .welcomeStrong {
+      font-weight: bold;
+    }
+
+    .loginButton {
+      width: 320px;
+    }
+  }
+}
+
+@media (max-width: @screen-lg) {
+  .loginContainer {
+    .loginForm {
+      left: 50%;
+      width: 50vw;
+      transform: translate(-50%, -50%);
+
+      .loginButton {
+        width: 100%;
+      }
+    }
+  }
+}
