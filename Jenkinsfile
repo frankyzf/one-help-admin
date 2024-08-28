@@ -32,25 +32,11 @@ pipeline {
     post {
         success {
             archiveArtifacts artifacts: 'dist/**,upgrade*.sh', onlyIfSuccessful: true
-            script {
-                if (env.JOB_URL.contains("local")) {
-                    // sh 'touch test_summary.log; touch test.log; python3 /home/homeplus/service/helper/sendEmail.py "test.log" "$NOTIFY_RECEIVERS" "successfully $NAME[local:$GIT_BRANCH]" "result: $(cat test_summary.log)"  '
-                    sh 'bash /home/homeplus/service/helper/compile_notify.sh "successfully compile $NAME[local:$GIT_BRANCH]" '
-                } else {
-                    // sh 'touch test_summary.log; touch test.log; python3 /home/homeplus/service/helper/sendEmail.py "test.log" "$NOTIFY_RECEIVERS" "successfully $NAME[cloud:$GIT_BRANCH]" "result: $(cat test_summary.log)"  '
-                    sh 'bash /home/homeplus/service/helper/compile_notify.sh "successfully compile $NAME[cloud:$GIT_BRANCH]" '
-                }
-            }
         }
-        unsuccessful {
+        always {
             script {
-                if (env.JOB_URL.contains("local")) {
-                    // sh 'touch test_summary.log; touch test.log; python3 /home/homeplus/service/helper/sendEmail.py "test.log" "$NOTIFY_RECEIVERS" "failed to compile $NAME[local:$GIT_BRANCH]" "result: $(cat test_summary.log)"  '
-                    sh 'bash /home/homeplus/service/helper/compile_notify.sh "failed to compile $NAME[local:$GIT_BRANCH]" '
-                } else {
-                    // sh 'touch test_summary.log; touch test.log; python3 /home/homeplus/service/helper/sendEmail.py "test.log" "$NOTIFY_RECEIVERS" "failed to compile $NAME[cloud:$GIT_BRANCH]" "result: $(cat test_summary.log)"  '
-                    sh 'bash /home/homeplus/service/helper/compile_notify.sh "failed to compile $NAME[cloud:$GIT_BRANCH]" '
-                }
+                sh "bash ${env.HOME}/build-utils/jenkins/compile_notify.sh 'Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}'"
+                sh "python3 ${env.HOME}/build-utils/jenkins/compile_email.py 'Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}'"
             }
         }
     }
