@@ -4,7 +4,6 @@ pipeline {
     }
     environment {
         PATH="/home/jenkins/soft/nodejs/bin:/var/data/jenkins/node/bin:${env.PATH}"
-        NOTIFY_RECEIVERS="dev@coloso.io,27504490@qq.com,xubo@coloso.io,abby@coloso.io,276644176@qq.com"
         NAME="one-help-admin"
     }
     stages {
