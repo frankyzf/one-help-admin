@@ -13,6 +13,7 @@ pipeline {
                     sh "rm -rf node_modules/"
                     sh "echo branch: ${env.BRANCH_NAME}, job url:${env.JOB_URL}"
                     sh "node --version"
+                    sh "yarn cache clean"
                     sh "yarn install"
                     if (env.BRANCH_NAME == "stage") {
                         sh "make stagelocal"
