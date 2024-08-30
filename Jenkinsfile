@@ -12,12 +12,12 @@ pipeline {
                 script {
                     sh "rm -rf node_modules/"
                     sh "echo branch: ${env.BRANCH_NAME}, job url:${env.JOB_URL}"
+                    sh "node --version"
+                    sh "yarn install"
                     if (env.BRANCH_NAME == "stage") {
-                        sh "yarn install"
                         sh "make stagelocal"
                         sh "make uploadstagelocal"
                     } else if (env.GIT_BRANCH.startsWith("dev") || env.GIT_BRANCH.startsWith("v")) {
-                        sh "yarn install"
                         sh "make uatlocal"
                         sh "make uploaduatlocal"
                     } else if (env.BRANCH_NAME == "master" || env.BRANCH_NAME == "main" || env.GIT_BRANCH.startsWith("hotfix/") ) {                        sh "yarn install"
