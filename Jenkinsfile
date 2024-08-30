@@ -3,13 +3,14 @@ pipeline {
         label 'front'
     }
     environment {
-        PATH="/home/jenkins/soft/nodejs/bin:/var/data/jenkins/node/bin:${env.PATH}"
+        PATH="${env.HOME}/node/bin:${env.PATH}"
         NAME="one-help-admin"
     }
     stages {
         stage('build') {
             steps {
                 script {
+                    sh "rm -rf node_modules/"
                     sh "echo branch: ${env.BRANCH_NAME}, job url:${env.JOB_URL}"
                     if (env.BRANCH_NAME == "stage") {
                         sh "yarn install"
