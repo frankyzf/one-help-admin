@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'front'
     }
+    parameters {
+        choice(name: 'CLEAN_CACHE', choices: ['', 'NO', 'YES'], description: 'clean cache')
+    }
     environment {
         PATH="${env.HOME}/node/bin:${env.PATH}"
         NAME="one-help-admin"
@@ -10,10 +13,12 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                    sh "rm -rf node_modules/"
+                    if (params.CLEAN_CACHE == 'YES') {
+                        sh "rm -rf node_modules/"
+                        sh "yarn cache clean"
+                    }
                     sh "echo branch: ${env.BRANCH_NAME}, job url:${env.JOB_URL}"
                     sh "node --version"
-                    sh "yarn cache clean"
                     sh "yarn install"
                     if (env.BRANCH_NAME == "stage") {
                         sh "make stagelocal"
